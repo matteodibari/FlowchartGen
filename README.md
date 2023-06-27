@@ -20,6 +20,23 @@ the character `#` should be inserted. Writing two instructions one after the oth
 graphically two blocks
 
 ## Instruction command
+The instruction command corresponds to the definition of a process node within the final graph. It is identified by the keyword `do` and as value it is given the label of the node.
+
+```YAML
+- do: A = 3
+- do: B = 4
+- do: C = 4
+```
+
+## IO command
+The Input/Output command corresponds to the definition of an Input/Output node within the
+graph (parallelogram). It is identified by the keyword `IO` and as a value requires the label
+of the node.
+
+```YAML
+- IO: Insert A
+- IO: Return B
+```
 
 ## If-else construct
 The construct is initialized with the keyword `if` to which is assigned as a value the entire set of
@@ -41,7 +58,7 @@ case of a false condition.
     − do: A −= 1
 ```
 
-##Loop construct
+## Loop construct
 This construct is initialized with the keyword `loop` and corresponds to the creation of a loop
 within the resulting graph. The keyword has to be followed, as seen for the if,  with all the
 instructions to be executed within the loop, with the exception of the first instruction, which must
@@ -55,4 +72,25 @@ conditional block of the loop, that is, the condition for which the logical proc
     - test: A < 10
     - do: A++
     - do: B--
+```
+
+## Functions
+There is also the possibility of graphically creating flowcharts rappresenting functions, thus with input parameters and return values. To do this it is necessary to
+use the keyword `main` and assign as its value a list of three specific elements:\
+- The first element of this list must be identified with the keyword `args` and must have
+as its value the function arguments (which will be drawn as the label of the arrow
+entering the BEGIN block).\
+- The second element must be identified with the keyword `body` and must contain all the
+operations performed internally by the function.\
+- The last element must be identified with the keyword `ret` and must have as its value
+the elements to be returned by the function in the output (drawn as the label of the arrow
+coming out of the END block).
+
+```YAML
+- main:
+    - args: [a, b]
+    - body:
+        - do: a = b + 1
+        - do: c = a + b
+    - ret: [c]
 ```
