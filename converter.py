@@ -6,7 +6,7 @@ fork_block = 0
 yes_flag = 0
 no_flag = 0
 if_flag = 0
-close_if = 0    #nuovo flag che mi dice se sono arrivato alla fine del costrutto if
+close_if = 0    
 
 def add_block(g, label, style):
     b = g.newItem(label)
@@ -86,7 +86,7 @@ def converter_rec(key, values):
             try:
                 label = values[0]['test']
             except KeyError:
-                print("ERROR: manca il campo \'test\' del costrutto if")
+                print("ERROR: missing \'test\' field in the if construct")
                 exit(3)
             block = add_block(g, label, 'if_style')
             add_link(g, previous_block, block)
@@ -107,11 +107,11 @@ def converter_rec(key, values):
             fork_block = block
             no_flag = 1
             if_flag = previous_if_flag      
-            close_if = 1                    #setto il flag per chiudere l'if a 1
+            close_if = 1                    
             
         case 'else':
             if close_if != 1:
-                print("ERRORE: else senza if")      #escamotage per controllare se c'è l if
+                print("ERRORE: else cannot be inserted without an associated if")     
                 exit()
             last_true_block = previous_block
             previous_block = fork_block
@@ -126,7 +126,6 @@ def converter_rec(key, values):
 
             
             fork_block = last_true_block
-            #riporto l if flag allo stato precedente
             if_flag = previous_if_flag
             do_close_if(g)
             
@@ -138,7 +137,7 @@ def converter_rec(key, values):
             try:
                 label = values[0]['test']
             except KeyError:
-                print("ERROR: manca il campo \'test\' del costrutto loop")
+                print("ERROR: missing \'test\' field in the loop")
                 exit(4)
             while_block = add_block(g, label, 'if_style')
             add_link(g, previous_block, while_block)
@@ -183,8 +182,8 @@ def converter(code, g):
 def converter_function(code, g):
     global previous_block
 
-    start = g.newItem('Inizio')
-    end = g.newItem('Fine')
+    start = g.newItem('START')
+    end = g.newItem('END')
     pseudostart = g.newItem('')
     pseudoend = g.newItem('')
     g.styleApply("terminal_style", start)

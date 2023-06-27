@@ -6,22 +6,16 @@
         - if:
             - test: a < b 
             - do: a++
-            - if:   
-                - test: ciao
-                - do: buonasera
             - do: b--
         - else: 
             - loop:
                 - test: c < 10
                 - do: c++
-                - if:   
-                    - test: ciao
-                    - do: buonasera
             - do: b++
             - do: a--
     - ret: [e, f, g]
 
-#----------------MCD Algoritmo di Euclide-------------
+#----------------MCD with Euclide algorithm -------------
 # - IO: Insert A
 # - IO: Insert B
 # - loop:
@@ -54,7 +48,7 @@
 #                     array[j+1] = temp
 # - IO: Return array
 
-# #-------------- max lista di valori-----------------
+# #-------------- Value list max -----------------
 # - IO: Insert value_list
 # - IO: Insert len
 # - do: max = value_list[0]
@@ -70,7 +64,7 @@
 #         - do: max = x
 # - IO: Return max
 
-# #--------------max 3 valori --------------------------
+# #-------------- Max between 3 values --------------------------
 # - IO: |
 #     Insert A
 #     Insert B
