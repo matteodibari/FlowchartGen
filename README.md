@@ -18,3 +18,15 @@ separated within the same code. All graphs start with the BEGIN block and end wi
 END block. To write multiline strings, the character `|` is used. To write comments
 the character `#` should be inserted. Writing two instructions one after the other corresponds to linking
 graphically two blocks
+
+##If-else construct
+The construct is initialized with the keyword `if` to which is assigned as a value the entire set of
+instructions to be executed in the case of a positive test. The first instruction must necessarily be
+identified by the keyword `test` and has as its value the label to be assigned to the graph node, that is, the 
+condition to be tested.
+It is possible to add a set of instructions to be executed in the case of a negative test by entering them
+as the value field of the keyword `else`, to be inserted at the same level as if. In the `else` it is not
+required the test field.
+Two arrows will come out of the conditional block, one with label `True`, which follows the path in
+case of a true condition, one labeled `False`, which follows the instruction path (if any) in
+case of a false condition.
