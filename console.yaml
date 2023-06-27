@@ -1,0 +1,92 @@
+
+
+- main:
+    - args: [a, b, c, d]
+    - body:
+        - if:
+            - test: a < b 
+            - do: a++
+            - if:   
+                - test: ciao
+                - do: buonasera
+            - do: b--
+        - else: 
+            - loop:
+                - test: c < 10
+                - do: c++
+                - if:   
+                    - test: ciao
+                    - do: buonasera
+            - do: b++
+            - do: a--
+    - ret: [e, f, g]
+
+#----------------MCD Algoritmo di Euclide-------------
+# - IO: Insert A
+# - IO: Insert B
+# - loop:
+#     - test: B != 0
+#     - do: tmp = A % B
+#     - do: A = B
+#     - do: B = tmp
+# - IO: Return A
+
+
+# #-------------- Bubble sort ------------------------
+# - IO: Insert array
+# - IO: Insert len
+# - do: |
+#         i = 0
+#         j = 0
+# - loop:
+#     - test: i < len
+#     - do: i++
+#     - loop:
+#         - test: j < len
+#         - do: j++
+#         - if:
+#             - test: array[j] <= array[j+1]
+#             - do: continue
+#         - else:
+#             - do: |
+#                     temp = array[j]
+#                     array[j] = array[j+1]
+#                     array[j+1] = temp
+# - IO: Return array
+
+# #-------------- max lista di valori-----------------
+# - IO: Insert value_list
+# - IO: Insert len
+# - do: max = value_list[0]
+# - do: i = 1
+# - loop: 
+#     - test: i < len
+#     - do: i++
+#     - do: x = value_list[i]
+#     - if:   
+#         - test: x <= max
+#         - do: continue
+#     - else: 
+#         - do: max = x
+# - IO: Return max
+
+# #--------------max 3 valori --------------------------
+# - IO: |
+#     Insert A
+#     Insert B
+#     Insert C
+# - do: MAX = A
+# - if:
+#     - test: B <= MAX
+#     - do: continue
+# - else:
+#     - do: MAX = B
+# - if:
+#     - test: C <= MAX
+#     - do: continue
+# - else:
+#     - do: MAX = C
+# - IO: Return MIN
+
+
+
