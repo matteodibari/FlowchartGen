@@ -19,7 +19,7 @@ END block. To write multiline strings, the character `|` is used. To write comme
 the character `#` should be inserted. Writing two instructions one after the other corresponds to linking
 graphically two blocks
 
-##If-else construct
+## If-else construct
 The construct is initialized with the keyword `if` to which is assigned as a value the entire set of
 instructions to be executed in the case of a positive test. The first instruction must necessarily be
 identified by the keyword `test` and has as its value the label to be assigned to the graph node, that is, the 
