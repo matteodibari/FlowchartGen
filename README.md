@@ -19,6 +19,8 @@ END block. To write multiline strings, the character `|` is used. To write comme
 the character `#` should be inserted. Writing two instructions one after the other corresponds to linking
 graphically two blocks
 
+## Instruction command
+
 ## If-else construct
 The construct is initialized with the keyword `if` to which is assigned as a value the entire set of
 instructions to be executed in the case of a positive test. The first instruction must necessarily be
@@ -30,3 +32,27 @@ required the test field.
 Two arrows will come out of the conditional block, one with label `True`, which follows the path in
 case of a true condition, one labeled `False`, which follows the instruction path (if any) in
 case of a false condition.
+
+```YAML
+− if: 
+    − test: A < 4
+    − do: A += 1
+− else:
+    − do: A −= 1
+```
+
+##Loop construct
+This construct is initialized with the keyword `loop` and corresponds to the creation of a loop
+within the resulting graph. The keyword has to be followed, as seen for the if,  with all the
+instructions to be executed within the loop, with the exception of the first instruction, which must
+necessarily be identified by the keyword `test` and must contain as its value the label of the
+conditional block of the loop, that is, the condition for which the logical process remains within the loop.
+
+```YAML
+- do: A = 0
+- do: B = 10
+- loop:
+    - test: A < 10
+    - do: A++
+    - do: B--
+```
