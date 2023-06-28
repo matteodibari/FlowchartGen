@@ -1,29 +1,61 @@
 
+# - main:
+#     - args: [a, b, c, d]
+#     - body:
+#         - if:
+#             - test: a < b
+#             - do: a++
+#             - do: b--
+#             - do: jijfdsajf
+#             - do: jijfdsajf
+#             - do: jijfdsajf
+#             - do: jijfdsajf
+#         - else:
+#             - if: 
+#                 - test: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#             - if: 
+#                 - test: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+                
+#     - ret: [e, f, g]
 
-- main:
-    - args: [a, b, c, d]
-    - body:
-        - if:
-            - test: a < b 
-            - do: a++
-            - do: b--
-        - else: 
-            - loop:
-                - test: c < 10
-                - do: c++
-            - do: b++
-            - do: a--
-    - ret: [e, f, g]
+# - main:
+#     - args: [a, b, c, d]
+#     - body:
+#         - if:
+#             - test: a < b
+#             - do: a++
+#             - do: b--
+#         - else:
+#             - loop:
+#                 - test: c < 10
+#                 - do: c++
+#             - do: b++
+#             - do: a--
+#     - ret: [e, f, g]
 
 #----------------MCD with Euclide algorithm -------------
-# - IO: Insert A
-# - IO: Insert B
-# - loop:
-#     - test: B != 0
-#     - do: tmp = A % B
-#     - do: A = B
-#     - do: B = tmp
-# - IO: Return A
+- IO: Insert A
+- IO: Insert B
+- loop:
+    - test: B != 0
+    - do: tmp = A % B
+    - loop:
+        - test: hi
+        - do: please
+        - do: help
+        - do: me
+    - do: B = tmp
+- IO: Return A
 
 
 # #-------------- Bubble sort ------------------------
@@ -42,10 +74,9 @@
 #             - test: array[j] <= array[j+1]
 #             - do: continue
 #         - else:
-#             - do: |
-#                     temp = array[j]
-#                     array[j] = array[j+1]
-#                     array[j+1] = temp
+#             - do: temp = array[j]
+#             - do: array[j] = array[j+1]
+#             - do: array[j+1] = temp
 # - IO: Return array
 
 # #-------------- Value list max -----------------
@@ -53,22 +84,21 @@
 # - IO: Insert len
 # - do: max = value_list[0]
 # - do: i = 1
-# - loop: 
+# - loop:
 #     - test: i < len
 #     - do: i++
 #     - do: x = value_list[i]
-#     - if:   
+#     - if:
 #         - test: x <= max
 #         - do: continue
-#     - else: 
+#     - else:
 #         - do: max = x
 # - IO: Return max
 
 # #-------------- Max between 3 values --------------------------
-# - IO: |
-#     Insert A
-#     Insert B
-#     Insert C
+# - IO: Insert A
+# - IO: Insert B
+# - IO: Insert C
 # - do: MAX = A
 # - if:
 #     - test: B <= MAX

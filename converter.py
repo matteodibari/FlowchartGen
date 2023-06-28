@@ -1,5 +1,10 @@
 import yaml
 import gvgen
+import numpy as np
+
+x_pos = 0
+y_pos = 0
+lower_y = 0
 
 previous_block = 0
 fork_block = 0
@@ -8,9 +13,39 @@ no_flag = 0
 if_flag = 0
 close_if = 0    
 
+blocks_matrix = np.zeros([255, 255], dtype=dict)
+
+def slide_columns(g):
+    global blocks_matrix
+    
+    x = len(blocks_matrix) - 1      #starting from the last column
+    while x > 0:
+        for y in range(255):
+            b = blocks_matrix[x][y]
+            if b != 0:
+                g.propertyAppend(b, 'pos', position(x + 2, - y))
+            blocks_matrix[x][y] = 0
+            if x + 2 < 255:
+                blocks_matrix[x + 2][y] = b
+        x -= 2
+    
+
+def position(x_pos, y_pos):
+    return str(x_pos) + ',' + str(y_pos) + '!'
+
 def add_block(g, label, style):
+    global x_pos, y_pos, lower_y 
+    global blocks_matrix
     b = g.newItem(label)
     g.styleApply(style, b)
+    g.propertyAppend(b, 'pos', position(x_pos, y_pos))
+    if lower_y > y_pos: lower_y = y_pos
+    
+    if blocks_matrix[abs(x_pos)][abs(y_pos)] != 0: 
+        slide_columns(g)
+    blocks_matrix[abs(x_pos)][abs(y_pos)] = b
+
+    y_pos = y_pos - 1
     return b
 
 def add_link(g, block1, block2):
@@ -29,7 +64,7 @@ def do_close_if(g):
     global previous_block
     global fork_block
     global if_flag
-    block = add_block(g, '', 'point')      
+    block = add_block(g, '', 'point')  
     l = add_link(g, fork_block, block)
     g.styleApply('line', l) 
     l = add_link(g, previous_block, block)
@@ -43,6 +78,7 @@ def converter_rec(key, values):
     global no_flag
     global if_flag
     global close_if
+    global x_pos, y_pos
 
     while_block = None
     label = None
@@ -98,11 +134,18 @@ def converter_rec(key, values):
             yes_flag = 1
             counter = 0
 
+            curr_position = [x_pos, y_pos]
+            x_pos += 2
+            y_pos += 1  #per partire dallo stesso livello del blocco condizionale
+
             for item in values:
                 counter += 1
                 if counter == 1: continue
                 key, values = list(item.items())[0]
                 converter_rec(key, values)   
+
+            x_pos = curr_position[0]
+            y_pos = curr_position[1]
 
             fork_block = block
             no_flag = 1
@@ -115,7 +158,6 @@ def converter_rec(key, values):
                 exit()
             last_true_block = previous_block
             previous_block = fork_block
-            #resetto l if flag
             previous_if_flag = if_flag
             if_flag = 0
             close_if = 0       
@@ -124,10 +166,13 @@ def converter_rec(key, values):
                 key, values = list(item.items())[0]
                 converter_rec(key, values)
 
-            
-            fork_block = last_true_block
+            if close_if == 1:
+                do_close_if(g)
+                close_if = 0
+
             if_flag = previous_if_flag
-            do_close_if(g)
+            l = add_link(g, last_true_block, previous_block)
+            g.styleApply('line', l)
             
 
         case 'loop':
@@ -145,12 +190,14 @@ def converter_rec(key, values):
             previous_block = while_block
             yes_flag = 1
             counter = 0
+            x_pos += 2
+            y_pos += 1  #per partire dallo stesso livello del blocco condizionale
             for item in values:
                 counter += 1
                 if counter == 1: continue
                 key, values = list(item.items())[0]
                 converter_rec(key, values)   
-
+            x_pos -= 2
             if close_if == 1:
                 do_close_if(g)
                 close_if = 0
@@ -165,11 +212,14 @@ def converter_rec(key, values):
     return
 
 def converter(code, g):
-    global previous_block
+    global previous_block, close_if
+    global x_pos, y_pos
 
     start = g.newItem('Inizio')
     end = g.newItem('Fine')
     g.styleApply("terminal_style", start)
+    g.propertyAppend(start, 'pos', position(x_pos, y_pos))
+    y_pos = y_pos - 1
     g.styleApply("terminal_style", end)
 
     previous_block = start
@@ -177,15 +227,27 @@ def converter(code, g):
         key, values = list(item.items())[0]
         converter_rec(key, values)
     add_link(g, previous_block, end)
+    if close_if == 1:
+        do_close_if(g)
+        close_if = 0
+
+    g.propertyAppend(end, 'pos', position(x_pos, y_pos))
     return       
 
 def converter_function(code, g):
-    global previous_block
+    global previous_block, close_if
+    global x_pos, y_pos, lower_y
 
-    start = g.newItem('START')
-    end = g.newItem('END')
     pseudostart = g.newItem('')
+    g.propertyAppend(pseudostart, 'pos', position(x_pos - 2, y_pos))
+    
+    start = g.newItem('START')
+    g.propertyAppend(start, 'pos', position(x_pos, y_pos))
+    y_pos -= 1
+    
+    end = g.newItem('END')
     pseudoend = g.newItem('')
+
     g.styleApply("terminal_style", start)
     g.styleApply("terminal_style", end)
     g.styleApply("point", pseudostart)
@@ -212,11 +274,17 @@ def converter_function(code, g):
             case 'body':
                 for item in values:
                     key, values = list(item.items())[0]
-                    converter_rec(key, values)              
+                    converter_rec(key, values)
+                if close_if == 1:
+                    do_close_if(g)
+                    close_if = 0              
             case _:
                 print('ERROR: the function is not written correctly')
                 exit()
 
+    g.propertyAppend(end, 'pos', position(x_pos, lower_y - 1))
+    g.propertyAppend(pseudoend, 'pos', position(x_pos + 2, lower_y - 1))
+    
     add_link(g, previous_block, end)
     return 
 
@@ -239,6 +307,8 @@ if __name__ == '__main__':
     g.setOptions(nodesep=1)
     g.setOptions(ranksep=0.5)
     g.setOptions(splines='ortho')
+    g.setOptions(layout='neato')
+    g.setOptions(overlap='scalexy')
     
     key, values = list(data[0].items())[0]
     if (key == 'main'):
