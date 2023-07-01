@@ -6,10 +6,19 @@
 #             - test: a < b
 #             - do: a++
 #             - do: b--
-#             - do: jijfdsajf
-#             - do: jijfdsajf
-#             - do: jijfdsajf
-#             - do: jijfdsajf
+#             - if: 
+#                 - test: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#                 - do: aaa
+#             - else:
+#                 - do: aaa
+#             - do: gdagg
+#             - do: gdagg
+#             - do: gdagg
+#             - do: gdagg
+#             - do: gdagg
 #         - else:
 #             - if: 
 #                 - test: aaa
@@ -25,7 +34,9 @@
 #                 - do: aaa
 #                 - do: aaa
 #                 - do: aaa
-                
+#             - else:
+#                 - do: aaa
+#                 - do: aaa
 #     - ret: [e, f, g]
 
 # - main:
@@ -44,18 +55,36 @@
 #     - ret: [e, f, g]
 
 #----------------MCD with Euclide algorithm -------------
-- IO: Insert A
-- IO: Insert B
-- loop:
-    - test: B != 0
-    - do: tmp = A % B
-    - loop:
-        - test: hi
-        - do: please
-        - do: help
-        - do: me
-    - do: B = tmp
-- IO: Return A
+# - IO: Insert A
+# - IO: Insert B
+# - loop:
+#     - test: B != 0
+#     - do: tmp = A % B
+#     - loop:
+#         - test: hi
+#         - do: please
+#         - do: help
+#         - if:
+#             - test: a < b
+#             - do: a++
+#             - do: b--
+#         - else:
+#             - loop:
+#                 - test: ad
+#                 - do: asfd
+#             - loop:
+#                 - test: hi
+#                 - do: please
+#                 - do: help
+#                 - if:
+#                     - test: a < b
+#                     - do: a++
+#                     - do: b--
+#                 - else:
+#                     - do: asfd
+#         - do: me
+#     - do: B = tmp
+# - IO: Return A
 
 
 # #-------------- Bubble sort ------------------------
@@ -71,9 +100,9 @@
 #         - test: j < len
 #         - do: j++
 #         - if:
-#             - test: array[j] <= array[j+1]
-#             - do: continue
-#         - else:
+#             - test: | 
+#                     array[j] > 
+#                     array[j+1]
 #             - do: temp = array[j]
 #             - do: array[j] = array[j+1]
 #             - do: array[j+1] = temp

@@ -5,6 +5,9 @@ import numpy as np
 x_pos = 0
 y_pos = 0
 lower_y = 0
+if_heights = [list(), 0]
+#if_heights[0][] = array of lenghts of the true branch (LIFO queue)
+#if_heights[1] = lenght of the false branch
 
 previous_block = 0
 fork_block = 0
@@ -15,11 +18,17 @@ close_if = 0
 
 blocks_matrix = np.zeros([255, 255], dtype=dict)
 
+def block_height_from_string(string):
+    numbers = string.split(',')
+    second_number = int(numbers[1][:-1])  
+    return second_number
+    
+
 def slide_columns(g):
     global blocks_matrix
     
     x = len(blocks_matrix) - 1      #starting from the last column
-    while x > 0:
+    while x > x_pos - 1:            #stopping on the current column
         for y in range(255):
             b = blocks_matrix[x][y]
             if b != 0:
@@ -60,25 +69,37 @@ def add_link(g, block1, block2):
         no_flag = 0
     return l
 
-def do_close_if(g):
+def do_close_if(g, last_true_block =  None):
     global previous_block
     global fork_block
     global if_flag
+    global x_pos, y_pos, if_heights
+
+    y = if_heights[0].pop()
+
+    if if_heights[1] > y:
+        y_pos = y_pos - if_heights[1] + 1
+    else:
+        y_pos = y_pos - y + 1
+
     block = add_block(g, '', 'point')  
-    l = add_link(g, fork_block, block)
-    g.styleApply('line', l) 
+
+    if if_heights[1] == 0:
+        l = add_link(g, fork_block, block)
+        g.styleApply('line', l)  
+
     l = add_link(g, previous_block, block)
+
     g.styleApply('line', l)
     previous_block = block
 
 def converter_rec(key, values):
-    global previous_block
-    global fork_block
+    global previous_block, fork_block
     global yes_flag
     global no_flag
     global if_flag
     global close_if
-    global x_pos, y_pos
+    global x_pos, y_pos, if_heights
 
     while_block = None
     label = None
@@ -134,7 +155,8 @@ def converter_rec(key, values):
             yes_flag = 1
             counter = 0
 
-            curr_position = [x_pos, y_pos]
+            prev_position = [x_pos, y_pos]
+            prev_if_heights = if_heights.copy()
             x_pos += 2
             y_pos += 1  #per partire dallo stesso livello del blocco condizionale
 
@@ -144,8 +166,10 @@ def converter_rec(key, values):
                 key, values = list(item.items())[0]
                 converter_rec(key, values)   
 
-            x_pos = curr_position[0]
-            y_pos = curr_position[1]
+            if_heights[0].append(abs(prev_position[1] - y_pos))
+
+            x_pos = prev_position[0] 
+            y_pos = prev_position[1]
 
             fork_block = block
             no_flag = 1
@@ -162,6 +186,10 @@ def converter_rec(key, values):
             if_flag = 0
             close_if = 0       
 
+            prev_if_heights = if_heights.copy()
+            if_heights[1] = 0
+            prev_y  = y_pos
+
             for item in values:
                 key, values = list(item.items())[0]
                 converter_rec(key, values)
@@ -170,6 +198,11 @@ def converter_rec(key, values):
                 do_close_if(g)
                 close_if = 0
 
+            if_heights[1] = abs(prev_y - y_pos) + 1
+            y_pos = prev_y
+            do_close_if(g, last_true_block)
+            if_heights = prev_if_heights.copy()
+            
             if_flag = previous_if_flag
             l = add_link(g, last_true_block, previous_block)
             g.styleApply('line', l)
@@ -191,7 +224,7 @@ def converter_rec(key, values):
             yes_flag = 1
             counter = 0
             x_pos += 2
-            y_pos += 1  #per partire dallo stesso livello del blocco condizionale
+            y_pos += 1  
             for item in values:
                 counter += 1
                 if counter == 1: continue
