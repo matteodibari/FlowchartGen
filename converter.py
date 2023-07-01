@@ -328,6 +328,7 @@ if __name__ == '__main__':
             data = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
+            exit()
 
     g = gvgen.GvGen() 
     g.styleAppend("terminal_style","shape","ellipse")         #style for terminal nodes
@@ -343,7 +344,12 @@ if __name__ == '__main__':
     g.setOptions(layout='neato')
     g.setOptions(overlap='scalexy')
     
-    key, values = list(data[0].items())[0]
+    try:
+        key, values = list(data[0].items())[0]
+    except TypeError:
+        print('ERROR: console has no content')
+        exit()
+
     if (key == 'main'):
         converter_function(values, g)
     else:
