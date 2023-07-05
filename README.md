@@ -85,6 +85,7 @@ operations performed internally by the function.
 - The last element must be identified with the keyword `ret` and must have as its value
 the elements to be returned by the function in the output (drawn as the label of the arrow
 coming out of the END block).
+- The keyword `name` can be used to define the name of the function, which will be used as label of the starting block (default is START).
 
 ```YAML
 - main:
