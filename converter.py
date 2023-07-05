@@ -90,7 +90,7 @@ def do_close_if(g, last_true_block =  None):
     else:
         y_pos = y_pos - y + 1
     
-    if y == 0:
+    if y == 0 and if_heights[1] == 0:
         y_pos -= 1
 
     block = add_block(g, 'point', '')  

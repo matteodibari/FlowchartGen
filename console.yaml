@@ -1,33 +1,40 @@
-- do: A = 0
-- do: B = 10
-- loop:
-    - test: A < 10
-    - do: A++
-    - do: B--
-    - do: B--
-    - loop:
-        - test: A < 10
-        - do: A++
-        - loop:
-            - test: A < 10
-            - do: A++
+# - do: A = 0
+# - do: B = 10
+# - loop:
+#     - test: A < 10
+#     - do: A++
+#     - do: B--
+#     - do: B--
+#     - loop:
+#         - test: A < 10
+#         - do: A++
+#         - loop:
+#             - test: A < 10
+#             - do: A++
             
-            - if: 
-                - test: A < B
-                - do: B++
-                - if: 
-                    - test: A < B
-                    - do: B++
-                    - if: 
-                        - test: A < B
-                        - do: B++
-            - if: 
-                - test: A < B
-                - do: B++
-                - if: 
-                    - test: A < B
-                    - do: B++
-                
+#             - if: 
+#                 - test: A < B
+#                 - do: B++
+#                 - if: 
+#                     - test: A < B
+#                     - do: B++
+#                     - if: 
+#                         - test: A < B
+#                         - do: B++
+#             - if: 
+#                 - test: A < B
+#                 - do: B++
+#                 - if: 
+#                     - test: A < B
+#                     - do: B++
+
+
+# - do: A = 0
+# - do: B = 10
+# - loop: 
+#     - test: A < 10
+#     - do: A++
+#     - do: B--
             
 #     - do: B--
 #     - do: B--
@@ -109,6 +116,23 @@
 #     - ret: [e, f, g]
 
 #----------------MCD with Euclide algorithm -------------
+- IO: |
+    Insert A
+    Insert B
+    Insert C
+- do: MIN = A
+- if:
+    - test: B >= MIN
+    - do: continue
+- else:
+    - do: MIN = B
+- if:
+    - test: C >= MIN
+    - do: continue
+- else:
+    - do: MIN = C
+- IO: Return MIN
+
 # - IO: Insert A
 # - IO: Insert B
 # - loop:
