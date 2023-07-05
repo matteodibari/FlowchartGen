@@ -1,5 +1,58 @@
+- do: A = 0
+- do: B = 10
+- loop:
+    - test: A < 10
+    - do: A++
+    - do: B--
+    - do: B--
+    - loop:
+        - test: A < 10
+        - do: A++
+        - loop:
+            - test: A < 10
+            - do: A++
+            
+            - if: 
+                - test: A < B
+                - do: B++
+                - if: 
+                    - test: A < B
+                    - do: B++
+                    - if: 
+                        - test: A < B
+                        - do: B++
+            - if: 
+                - test: A < B
+                - do: B++
+                - if: 
+                    - test: A < B
+                    - do: B++
+                
+            
+#     - do: B--
+#     - do: B--
 
-# - main:
+#-------------------NESTED LOOPS------------------
+# - loop:
+#     - test: A < B
+#     - do: B++
+#     - do: B++
+#     - loop:
+#         - test: A < B
+#         - do: B++
+#         - do: B++
+#         - loop:
+#             - test: A < B
+#             - do: B++
+#             - do: B++
+
+
+# - if:
+#     - test: A < B
+#     - do: aa
+    
+
+# - func:
 #     - args: [a, b, c, d]
 #     - body:
 #         - if:
@@ -39,7 +92,8 @@
 #                 - do: aaa
 #     - ret: [e, f, g]
 
-# - main:
+# - func:
+#     - name: function
 #     - args: [a, b, c, d]
 #     - body:
 #         - if:
@@ -66,9 +120,7 @@
 #         - do: help
 #         - if:
 #             - test: a < b
-#             - do: a++
-#             - do: b--
-#         - else:
+            
 #             - loop:
 #                 - test: ad
 #                 - do: asfd
@@ -77,14 +129,45 @@
 #                 - do: please
 #                 - do: help
 #                 - if:
-#                     - test: a < b
 #                     - do: a++
 #                     - do: b--
+#                     - test: a < b
 #                 - else:
 #                     - do: asfd
+#         - else:
+#             - do: a++
+#             - do: b--
 #         - do: me
 #     - do: B = tmp
 # - IO: Return A
+
+# - if:
+#             - test: a < b
+#             - loop:
+#                 - test: ad
+#                 - do: asfd
+#                 - loop:
+#                     - test: hi
+#                     - do: please
+#                     - do: help
+#                     - loop:
+#                         - test: hi
+#                         - do: please
+#                         - do: help
+#                         - if: 
+#                             - test: ciao
+
+#                             - loop:
+#                                 - test: hi
+#                                 - do: please
+#                                 - do: help
+#                         - if: 
+#                             - test: ciao
+
+#                             - loop:
+#                                 - test: hi
+#                                 - do: please
+#                                 - do: help
 
 
 # #-------------- Bubble sort ------------------------
