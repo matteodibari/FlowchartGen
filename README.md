@@ -76,7 +76,7 @@ conditional block of the loop, that is, the condition for which the logical proc
 
 ## Functions
 There is also the possibility of graphically creating flowcharts rappresenting functions, thus with input parameters and return values. To do this it is necessary to
-use the keyword `main` and assign as its value a list of three specific elements:
+use the keyword `func` and assign as its value a list of three specific elements:
 - The first element of this list must be identified with the keyword `args` and must have
 as its value the function arguments (which will be drawn as the label of the arrow
 entering the BEGIN block).
@@ -88,7 +88,7 @@ coming out of the END block).
 - The keyword `name` can be used to define the name of the function, which will be used as label of the starting block (default is START).
 
 ```YAML
-- main:
+- func:
     - args: [a, b]
     - body:
         - do: a = b + 1
