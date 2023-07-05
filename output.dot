@@ -3,33 +3,55 @@
 digraph G {
 compound=true;nodesep=1;ranksep=0.5;splines=ortho;layout=neato;overlap=scalexy;
    node1 [shape="ellipse",label="Inizio",pos="0,0!"];
-   node2 [shape="ellipse",label="Fine",pos="0,-10!"];
-   node3 [shape="parallelogram",label="Insert A
-Insert B
-Insert C
-",pos="0,-1!"];
-   node4 [shape="box",label="MIN = A",pos="0,-2!"];
-   node5 [shape="diamond",label="B >= MIN",pos="0,-3!"];
-   node6 [shape="box",label="continue",pos="2,-3!"];
-   node7 [shape="box",label="MIN = B",pos="0,-4!"];
-   node8 [shape="point",label="",pos="0,-5!"];
-   node9 [shape="diamond",label="C >= MIN",pos="0,-6!"];
-   node10 [shape="box",label="continue",pos="2,-6!"];
-   node11 [shape="box",label="MIN = C",pos="0,-7!"];
-   node12 [shape="point",label="",pos="0,-8!"];
-   node13 [shape="parallelogram",label="Return MIN",pos="0,-9!"];
+   node2 [shape="ellipse",label="Fine",pos="0,-16!"];
+   node3 [shape="parallelogram",label="Insert array",pos="0,-1!"];
+   node4 [shape="parallelogram",label="Insert len",pos="0,-2!"];
+   node5 [shape="box",label="i = 0
+j = 0
+",pos="0,-3!"];
+   node6 [shape="point",label="",pos="0,-4!"];
+   node7 [shape="diamond",label="i < len",pos="0,-5!"];
+   node8 [shape="box",label="i++",pos="0,-6!"];
+   node9 [shape="point",label="",pos="0,-7!"];
+   node10 [shape="diamond",label="j < len",pos="0,-8!"];
+   node11 [shape="box",label="j++",pos="0,-9!"];
+   node12 [shape="diamond",label="array[j] > 
+array[j+1]
+",pos="0,-10!"];
+   node13 [shape="box",label="temp = array[j]",pos="2,-10!"];
+   node14 [shape="box",label="array[j] = array[j+1]",pos="2,-11!"];
+   node15 [shape="box",label="array[j+1] = temp",pos="2,-12!"];
+   node16 [shape="point",label="",pos="0,-12!"];
+   node17 [shape="point",label="",pos="0,-13!"];
+   node18 [shape="point",label="",pos="-1,-13!"];
+   node19 [shape="point",label="",pos="3,-8!"];
+   node20 [shape="point",label="",pos="0,-14!"];
+   node21 [shape="point",label="",pos="-2,-14!"];
+   node22 [shape="point",label="",pos="4,-5!"];
+   node23 [shape="parallelogram",label="Return array",pos="0,-15!"];
 node1->node3;
 node3->node4;
 node4->node5;
-node5->node6 [taillabel="True"];
-node5->node7 [taillabel="False"];
-node6->node8 [arrowhead="none"];
-node7->node8 [arrowhead="none"];
-node8->node9;
-node9->node10 [taillabel="True"];
-node9->node11 [taillabel="False"];
-node10->node12 [arrowhead="none"];
-node11->node12 [arrowhead="none"];
-node12->node13;
-node13->node2;
+node5->node6 [arrowhead="none"];
+node6->node7;
+node7->node8 [taillabel="True"];
+node7->node22 [arrowhead="none",taillabel="False"];
+node8->node9 [arrowhead="none"];
+node9->node10;
+node10->node11 [taillabel="True"];
+node10->node19 [arrowhead="none",taillabel="False"];
+node11->node12;
+node12->node13 [taillabel="True"];
+node12->node16 [arrowhead="none",taillabel="False"];
+node13->node14;
+node14->node15;
+node15->node16 [arrowhead="none"];
+node16->node17;
+node17->node18 [arrowhead="none",tailport="s"];
+node18->node9 [arrowhead="none"];
+node19->node20;
+node20->node21 [arrowhead="none",tailport="s"];
+node21->node6 [arrowhead="none"];
+node22->node23;
+node23->node2;
 }

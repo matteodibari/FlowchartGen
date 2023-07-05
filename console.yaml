@@ -116,22 +116,22 @@
 #     - ret: [e, f, g]
 
 #----------------MCD with Euclide algorithm -------------
-- IO: |
-    Insert A
-    Insert B
-    Insert C
-- do: MIN = A
-- if:
-    - test: B >= MIN
-    - do: continue
-- else:
-    - do: MIN = B
-- if:
-    - test: C >= MIN
-    - do: continue
-- else:
-    - do: MIN = C
-- IO: Return MIN
+# - IO: |
+#     Insert A
+#     Insert B
+#     Insert C
+# - do: MIN = A
+# - if:
+#     - test: B >= MIN
+#     - do: continue
+# - else:
+#     - do: MIN = B
+# - if:
+#     - test: C >= MIN
+#     - do: continue
+# - else:
+#     - do: MIN = C
+# - IO: Return MIN
 
 # - IO: Insert A
 # - IO: Insert B
@@ -195,25 +195,25 @@
 
 
 # #-------------- Bubble sort ------------------------
-# - IO: Insert array
-# - IO: Insert len
-# - do: |
-#         i = 0
-#         j = 0
-# - loop:
-#     - test: i < len
-#     - do: i++
-#     - loop:
-#         - test: j < len
-#         - do: j++
-#         - if:
-#             - test: | 
-#                     array[j] > 
-#                     array[j+1]
-#             - do: temp = array[j]
-#             - do: array[j] = array[j+1]
-#             - do: array[j+1] = temp
-# - IO: Return array
+- IO: Insert array
+- IO: Insert len
+- do: |
+        i = 0
+        j = 0
+- loop:
+    - test: i < len
+    - do: i++
+    - loop:
+        - test: j < len
+        - do: j++
+        - if:
+            - test: | 
+                    array[j] > 
+                    array[j+1]
+            - do: temp = array[j]
+            - do: array[j] = array[j+1]
+            - do: array[j+1] = temp
+- IO: Return array
 
 # #-------------- Value list max -----------------
 # - IO: Insert value_list

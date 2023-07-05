@@ -18,8 +18,6 @@ no_flag = 0
 if_flag = 0
 close_if = 0    
 
-
-
 blocks_matrix = np.zeros([255, 255], dtype=dict)
 
 def block_height_from_string(string):
@@ -272,8 +270,6 @@ def converter_rec(key, values):
             internal_lower_x = 1
             max_x = 1
 
-            
-
             for item in values:
                 counter += 1
                 if counter == 1: continue
@@ -282,31 +278,29 @@ def converter_rec(key, values):
                 if internal_higher_x > max_x:
                     max_x = internal_higher_x
                 internal_higher_x = 1
-
-            # x_pos -= 2
+                
             if close_if == 1:
                 do_close_if(g)
                 close_if = 0
 
-
             down_true_anchor = add_block(g, 'point')
-            down_false_anchor = add_block(g, 'point')
+            # down_false_anchor = add_block(g, 'point')
             l = add_link(g, previous_block, down_true_anchor)
-            y_pos += 2
+            y_pos += 1
+
             if x_pos == 0:
-                print(internal_lower_x)
                 x_pos -= internal_lower_x 
                 left_true_anchor = add_block(g, 'point')
                 y_pos -= 2
                 x_pos += internal_lower_x
                 internal_lower_x += 1
-                
             else:
                 slide_columns(g)
                 x_pos -= 1
                 left_true_anchor = add_block(g, 'point')
                 x_pos += 1
                 y_pos -= 2
+
             l = add_link(g, down_true_anchor, left_true_anchor)
             g.propertyAppend(l, 'tailport', 's')
             g.styleApply('line', l)
@@ -319,13 +313,13 @@ def converter_rec(key, values):
             no_flag = 1
             right_false_anchor = add_block(g, 'point')
             x_pos -= max_x  
-            y_pos = tmp + 1
+            y_pos = tmp + 2
             l = add_link(g, while_block, right_false_anchor)
             g.styleApply('line', l)
-            l = add_link(g, right_false_anchor, down_false_anchor)
+            #l = add_link(g, right_false_anchor, down_false_anchor)
             g.styleApply('line', l)
 
-            previous_block = down_false_anchor
+            previous_block = right_false_anchor
             internal_higher_x = prev_internal_higher_x + max_x
             if prev_internal_lower_x == 0:
                 internal_lower_x = prev_internal_lower_x
