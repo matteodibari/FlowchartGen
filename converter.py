@@ -32,8 +32,7 @@ def slide_columns(g):
     global blocks_matrix
     
     x = len(blocks_matrix) - 1      #starting from the last column
-   
-    while x > x_pos - 1:            #stopping on the current
+    while x > x_pos - 1:            #stopping on the current one
         for y in range(255):
             if y < y_pos:
                 b = blocks_matrix[x][y]
@@ -76,9 +75,6 @@ def add_link(g, block1, block2):
     if no_flag:
         g.propertyAppend(l, 'taillabel', 'False')
         no_flag = 0
-    # print(g.propertyGet(block2, 'shape'))
-    # if g.propertyGet(block2, 'shape') == "point":
-    #     g.styleApply('line', l)
     return l
 
 def do_close_if(g, last_true_block =  None):
@@ -212,7 +208,6 @@ def converter_rec(key, values):
             if_flag = previous_if_flag      
             close_if = 1              
             internal_higher_x += 2
-            #internal_lower_x += prev_internal_lower_x
 
 
               
